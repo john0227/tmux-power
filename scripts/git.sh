@@ -88,7 +88,7 @@ check_for_git_dir() {
 
 get_origin_name() {
     if [ $(check_for_git_dir) == "true" ]; then
-        origin=$(basename $(awk -F ' = ' '/\[remote "origin"\]/{f=1} f && /url = /{print $2; exit}' $path/.git/config) | sed -E 's/.git$//')
+        origin=$(basename $(git -C "$path" config --get remote.origin.url | sed -E 's/.git$//'))
         echo "$origin"
     else
         echo ""
